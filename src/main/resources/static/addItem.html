@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <title>To Do Application - Add Items</title>
+    <script  src="https://code.jquery.com/jquery-3.2.1.js"
+      integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="  crossorigin="anonymous">
+    </script>
+
+  </head>
+
+ 	<body bgcolor="lightgrey">
+			<h1>
+		    <marquee loop=1 bgcolor=blue behavior=alternate>Add To Do Items</marquee>
+		   </h1>
+		
+		
+		  <fieldset>			    
+			    ToDo Item Name:<input type="text" id="name" ><br>
+			    Item Category:&nbsp;<input type="text" id="category" ><br><br>
+			    <button onclick="addTODO()">Add Item</button>
+		  </fieldset>
+			
+			<script type="text/javascript">
+			function addTODO(){
+				var name = document.getElementById('name').value;
+		    	var category = document.getElementById('category').value;
+		    	var sendInfo = {"name":name, "category":category}
+		    	
+		    	$.ajax({
+		            type: 'post',
+		            url: 'http://localhost:8011/todos/addItem',
+		            data: JSON.stringify(sendInfo),
+		            contentType: "application/json; charset=utf-8",
+		            traditional: true,
+		            success: function (data) {
+		                alert('ToDo Item added');
+		                window.onunload = refreshParent;
+		                window.close();
+		            }
+		            
+		        });
+		    	
+			}
+			
+			
+			function refreshParent() {
+			        window.opener.location.reload();
+			    }
+			
+			</script>
+		
+
+	
+
+	</body>
+ </html>
